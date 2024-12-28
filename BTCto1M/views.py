@@ -1,4 +1,5 @@
 from django.shortcuts import redirect
+from django.http import HttpResponse   
 from dotenv import load_dotenv
 import os
 from .utils import *
@@ -10,6 +11,14 @@ def home(request):
     return redirect('https://x.com/BTCinMillion')
 
 def cron_job_call_handler(request):
+    secret = request.headers.get('X-Cron-Secret')
+    expected_secret = os.getenv('CRON_SECRET')
+
+    if secret != expected_secret:
+        return HttpResponse('Unauthorized', status=401)
+
+
+
     global LAST_BTC_24hr_HIGH
 
     try:
@@ -58,4 +67,4 @@ def cron_job_call_handler(request):
                                image_link=image_url,
                                tweet_link=tweet_link)
 
-    return redirect('/')
+    return HttpResponse('Task Succesfull', status=200)

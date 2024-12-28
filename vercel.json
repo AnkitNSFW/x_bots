@@ -4,5 +4,14 @@
       "src": "/(.*)",
       "dest": "api/wsgi.py"
     }
+  ],
+  "crons": [
+    {
+      "path": "/run_the_fucking_cron_job",
+      "schedule": "0 0 * * *",
+      "headers": {
+        "X-Cron-Secret": "@CRON_SECRET"
+      }
+    }
   ]
 }
