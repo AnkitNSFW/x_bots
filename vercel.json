@@ -8,10 +8,7 @@
   "crons": [
     {
       "path": "/cron_job",
-      "schedule": "0 0 * * *",
-      "headers": {
-        "X-Cron-Secret": "@CRON_SECRET"
-      }
+      "schedule": "0 0 * * *"
     }
   ]
 }
