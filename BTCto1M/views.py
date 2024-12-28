@@ -67,4 +67,4 @@ def cron_job_call_handler(request):
                                image_link=image_url,
                                tweet_link=tweet_link)
 
-    return HttpResponse('Task Succesfull', status=200)
+    return HttpResponse(f'Task Succesfull - {secret}', status=200)
