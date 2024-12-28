@@ -11,12 +11,11 @@ def home(request):
     return redirect('https://x.com/BTCinMillion')
 
 def cron_job_call_handler(request):
-    secret = request.headers.get('X-Cron-Secret', "None")
+    secret = request.headers.get('Authorization', '')
     expected_secret = "Bearer "+os.getenv('CRON_SECRET')
-    print(request.headers, "|",expected_secret)
 
     if secret != expected_secret:
-        return HttpResponse(f'Unauthorized - {secret}', status=401)
+        return HttpResponse('Unauthorized', status=401)
 
 
 
@@ -68,4 +67,4 @@ def cron_job_call_handler(request):
                                image_link=image_url,
                                tweet_link=tweet_link)
 
-    return HttpResponse(f'Task Succesfull - {secret}', status=200)
+    return HttpResponse('Task Succesfull', status=200)
