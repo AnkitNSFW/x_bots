@@ -7,7 +7,7 @@
   ],
   "crons": [
     {
-      "path": "/cron_job",
+      "path": "/cron_job_trigger",
       "schedule": "0 0 * * *"
     }
   ]
