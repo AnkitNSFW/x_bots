@@ -7,7 +7,7 @@
   ],
   "crons": [
     {
-      "path": "/run_the_fucking_cron_job",
+      "path": "/cron_job",
       "schedule": "0 0 * * *",
       "headers": {
         "X-Cron-Secret": "@CRON_SECRET"
