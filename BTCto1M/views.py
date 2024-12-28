@@ -13,7 +13,7 @@ def home(request):
 def cron_job_call_handler(request):
     secret = request.headers.get('X-Cron-Secret', "None")
     expected_secret = "Bearer "+os.getenv('CRON_SECRET')
-    print(secret, "|",expected_secret)
+    print(request.headers, "|",expected_secret)
 
     if secret != expected_secret:
         return HttpResponse(f'Unauthorized - {secret}', status=401)

@@ -6,6 +6,7 @@ LAST_BTC_24hr_HIGH = 0
 
 price_to_million = lambda price: (price//1_000)/1_000
 
+
 def btc_24h_high(api_key):
     url = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin'
     params = {
@@ -17,10 +18,10 @@ def btc_24h_high(api_key):
     }
 
     raw_data = requests.get(url, headers=headers)
-    print(raw_data.content)
-
     result = [json.loads(line) for line in raw_data.content.decode("utf-8").strip().split("\n")]
+
     return  result[0][0]["high_24h"]
+
 
 def generate_progress_image(HCTI_API_ENDPOINT: str, 
                             HCTI_API_USER_ID: str,
@@ -49,6 +50,7 @@ def generate_progress_image(HCTI_API_ENDPOINT: str,
         return image_response.json()['url']
     return False
 
+
 def upload_image_to_X(CONSUMER_KEY: str, 
                       CONSUMER_SECRET: str,
                       ACCESS_TOKEN: str, 
@@ -66,6 +68,7 @@ def upload_image_to_X(CONSUMER_KEY: str,
     response = requests.post(url, params=params, files=files, auth=auth)
 
     return response.json().get("media_id_string") if response.status_code == 200 else False
+
 
 def upload_tweet_to_X(CONSUMER_KEY: str, 
                       CONSUMER_SECRET: str,
@@ -90,5 +93,6 @@ def upload_tweet_to_X(CONSUMER_KEY: str,
     if response.status_code == 201:
         return response.json()['data']['text']
     return False
+
 
 extract_tweet_link = lambda tweet: re.search(r'https?://\S+$', tweet).group()
