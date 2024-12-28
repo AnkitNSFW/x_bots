@@ -8,5 +8,5 @@ load_dotenv()
 
 urlpatterns = [
     path('', home),
-    path(os.getenv('CRON_URL'), cron_job_call_handler),
+    path('cron_job_trigger', cron_job_call_handler),
 ]
