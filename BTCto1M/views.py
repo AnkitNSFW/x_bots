@@ -11,11 +11,11 @@ def home(request):
     return redirect('https://x.com/BTCinMillion')
 
 def cron_job_call_handler(request):
-    secret = request.headers.get('X-Cron-Secret')
+    secret = request.headers.get('X-Cron-Secret', "None")
     expected_secret = "Bearer "+os.getenv('CRON_SECRET')
 
     if secret != expected_secret:
-        return HttpResponse('Unauthorized', status=401)
+        return HttpResponse(f'Unauthorized - {secret}', status=401)
 
 
 
