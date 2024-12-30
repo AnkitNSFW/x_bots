@@ -26,15 +26,15 @@ def btc_24h_high(api_key):
 def generate_progress_image(HCTI_API_ENDPOINT: str, 
                             HCTI_API_USER_ID: str,
                             HCTI_API_KEY: str,
-                            btc_price: float):
+                            current_btc_24hr_high_in_million: float):
     data = { 'html': f'''
         <script src="https://cdn.tailwindcss.com"></script>
         <div class="bg-white text-center h-[200px] w-[778px] p-[10px]">
             <div class="relative h-[158px] w-[758px] bg-black border-4 border-black">
                 <span class="absolute inset-0 flex text- text-4xl text-white items-center justify-center z-10">
-                    ${price_to_million(price=btc_price)}M
+                    ${current_btc_24hr_high_in_million}M
                 </span>
-                <div class="bg-[#F2A900] h-[150px] w-[{(btc_price/1_000_000)*750}px]">
+                <div class="bg-[#F2A900] h-[150px] w-[{current_btc_24hr_high_in_million*750}px]">
                 </div>
             </div>
             <div class="text-right mt-1">

@@ -30,13 +30,14 @@ def cron_job_call_handler(request):
     last_price = max(LAST_BTC_24hr_HIGH, last_post_price)
     
     current_btc_24hr_high = btc_24h_high(api_key=os.getenv('CRYPTO_API_KEY'))
-    LAST_BTC_24hr_HIGH = current_btc_24hr_high
+    current_btc_24hr_high_in_million = price_to_million(price=current_btc_24hr_high)
+    LAST_BTC_24hr_HIGH = current_btc_24hr_high_in_million
 
-    if current_btc_24hr_high > last_price:
+    if current_btc_24hr_high_in_million > last_price:
         image_url = generate_progress_image(HCTI_API_ENDPOINT=os.getenv('HCTI_API_ENDPOINT'),
                                             HCTI_API_USER_ID=os.getenv('HCTI_API_USER_ID'),
                                             HCTI_API_KEY=os.getenv('HCTI_API_KEY'),
-                                            btc_price=current_btc_24hr_high)
+                                            btc_price=current_btc_24hr_high_in_million)
 
         if image_url:
             media_id = upload_image_to_X(CONSUMER_KEY=os.getenv('X_CONSUMER_KEY'),
@@ -53,7 +54,7 @@ def cron_job_call_handler(request):
                                             CONSUMER_SECRET=os.getenv('X_CONSUMER_SECRET'),
                                             ACCESS_TOKEN=os.getenv('X_ACCESS_TOKEN'),
                                             ACCESS_TOKEN_SECRET=os.getenv('X_ACCESS_TOKEN_SECRET'),
-                                            btc_price=current_btc_24hr_high,
+                                            btc_price=current_btc_24hr_high_in_million,
                                             media_id=media_id)
         else:
             return
@@ -63,7 +64,7 @@ def cron_job_call_handler(request):
             tweet_link = extract_tweet_link(tweet_metadata)
             
         
-        BTCPost.objects.create(btc_price=current_btc_24hr_high,
+        BTCPost.objects.create(btc_price=current_btc_24hr_high_in_million,
                                image_link=image_url,
                                tweet_link=tweet_link)
 
