@@ -1,7 +1,7 @@
 from django.db import models
 
 class BTCPost(models.Model):
-    btc_price = models.IntegerField()
+    btc_price = models.FloatField()
     post_time = models.DateTimeField(auto_now_add=True)
     image_link = models.URLField(max_length=100)
     tweet_link = models.URLField(max_length=100)
