@@ -54,7 +54,7 @@ def cron_job_call_handler(request):
                                             CONSUMER_SECRET=os.getenv('X_CONSUMER_SECRET'),
                                             ACCESS_TOKEN=os.getenv('X_ACCESS_TOKEN'),
                                             ACCESS_TOKEN_SECRET=os.getenv('X_ACCESS_TOKEN_SECRET'),
-                                            btc_price=current_btc_24hr_high_in_million,
+                                            btc_price=current_btc_24hr_high,
                                             media_id=media_id)
         else:
             return
