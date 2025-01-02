@@ -37,7 +37,7 @@ def cron_job_call_handler(request):
         image_url = generate_progress_image(HCTI_API_ENDPOINT=os.getenv('HCTI_API_ENDPOINT'),
                                             HCTI_API_USER_ID=os.getenv('HCTI_API_USER_ID'),
                                             HCTI_API_KEY=os.getenv('HCTI_API_KEY'),
-                                            btc_price=current_btc_24hr_high_in_million)
+                                            current_btc_24hr_high_in_million=current_btc_24hr_high_in_million)
 
         if image_url:
             media_id = upload_image_to_X(CONSUMER_KEY=os.getenv('X_CONSUMER_KEY'),
