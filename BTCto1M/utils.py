@@ -8,19 +8,18 @@ price_to_million = lambda price: (price//1_000)/1_000
 
 
 def btc_24h_high(api_key):
-    url = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin'
-    params = {
-    'vs_currency': 'usd',
-    'ids': 'bitcoin'
-    }
-    headers = {
-        'x_cg_demo_api_key': api_key
-    }
+    try:
+        url = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin'
+        headers = {
+            'x_cg_demo_api_key': api_key
+        }
 
-    raw_data = requests.get(url, headers=headers)
-    result = [json.loads(line) for line in raw_data.content.decode("utf-8").strip().split("\n")]
+        raw_data = requests.get(url, headers=headers)
+        result = [json.loads(line) for line in raw_data.content.decode("utf-8").strip().split("\n")]
 
-    return  result[0][0]["high_24h"]
+        return  result[0][0]["high_24h"]
+    except:
+        return 0
 
 
 def generate_progress_image(HCTI_API_ENDPOINT: str, 
