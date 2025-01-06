@@ -85,16 +85,11 @@ def cron_job_call_handler(request):
                                image_link=image_url,
                                tweet_link=tweet_link)
         Email_Content += f"\n\nTweet Posted: {tweet_link}"
-    else:
-        Email_Subject = "No New High"
-        Email_Content += f"\n\nNo New High"
-        
-    
 
-    if not Email_Subject:
-        Email_Subject = f"BTCto1M ${current_btc_24hr_high_in_million}M(${current_btc_24hr_high})"
-    Notify_Developer(subject=Email_Subject, 
-                     content=Email_Content, 
-                     to_addr=os.getenv('DEVELOPER_EMAIL'))
+        if not Email_Subject:
+            Email_Subject = f"BTCto1M ${current_btc_24hr_high_in_million}M(${current_btc_24hr_high})"
+        Notify_Developer(subject=Email_Subject, 
+                        content=Email_Content, 
+                        to_addr=os.getenv('DEVELOPER_EMAIL'))
 
     return HttpResponse('Task Succesfull', status=200)
