@@ -4,8 +4,9 @@ from dotenv import load_dotenv
 import os
 from .utils import *
 from .models import BTCPost
+from .email_function import Notify_Developer
 from datetime import datetime
-from email_function import Notify_Developer
+
 load_dotenv()
 
 def home(request):
