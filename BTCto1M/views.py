@@ -38,7 +38,7 @@ def cron_job_call_handler(request):
     LAST_BTC_24hr_HIGH = current_btc_24hr_high_in_million
 
     if current_btc_24hr_high_in_million > last_price:
-        Email_Content += f"\n\nNew High: ${current_btc_24hr_high_in_million}M"
+        Email_Content += f"\n\n >  New High: ${current_btc_24hr_high_in_million}M"
 
         image_url = generate_progress_image(HCTI_API_ENDPOINT=os.getenv('HCTI_API_ENDPOINT'),
                                             HCTI_API_USER_ID=os.getenv('HCTI_API_USER_ID'),
@@ -46,7 +46,7 @@ def cron_job_call_handler(request):
                                             current_btc_24hr_high_in_million=current_btc_24hr_high_in_million)
 
         if image_url:
-            Email_Content += f"\n\nImage Generated: {image_url}"
+            Email_Content += f"\n\n >  Image Generated: {image_url}"
             media_id = upload_image_to_X(CONSUMER_KEY=os.getenv('X_CONSUMER_KEY'),
                                         CONSUMER_SECRET=os.getenv('X_CONSUMER_SECRET'),
                                         ACCESS_TOKEN=os.getenv('X_ACCESS_TOKEN'),
@@ -54,12 +54,12 @@ def cron_job_call_handler(request):
                                         image_url=image_url)
         else:
             Email_Subject = "Image Generation Failed"
-            Email_Content += f"\n\nImage Generation Failed"
+            Email_Content += f"\n\n X  TImage Generation Failed"
             return
         
 
         if media_id:
-            Email_Content += f"\n\nImage Uploaded to Twitter: {media_id}"
+            Email_Content += f"\n\n >  Image Uploaded to Twitter: {media_id}"
             tweet_metadata = upload_tweet_to_X(CONSUMER_KEY=os.getenv('X_CONSUMER_KEY'),
                                             CONSUMER_SECRET=os.getenv('X_CONSUMER_SECRET'),
                                             ACCESS_TOKEN=os.getenv('X_ACCESS_TOKEN'),
@@ -68,23 +68,23 @@ def cron_job_call_handler(request):
                                             media_id=media_id)
         else:
             Email_Subject = "Image Upload Failed"
-            Email_Content += f"\n\nImage Upload to Twitter Failed"
+            Email_Content += f"\n\n X  TImage Upload to Twitter Failed"
             return
         
 
         if tweet_metadata:
-            Email_Content += f"\n\nTweet Uploaded"
+            Email_Content += f"\n\n >  Tweet Uploaded"
             tweet_link = extract_tweet_link(tweet_metadata)
         else:
             Email_Subject = "Tweet Upload Failed"
-            Email_Content += f"\n\nTweet Upload Failed"
+            Email_Content += f"\n\n X  Tweet Upload Failed"
             return
             
         
         BTCPost.objects.create(btc_price=current_btc_24hr_high_in_million,
                                image_link=image_url,
                                tweet_link=tweet_link)
-        Email_Content += f"\n\nTweet Posted: {tweet_link}"
+        Email_Content += f"\n\n >  Tweet Posted: {tweet_link}"
 
         if not Email_Subject:
             Email_Subject = f"BTCto1M ${current_btc_24hr_high_in_million}M(${current_btc_24hr_high})"
